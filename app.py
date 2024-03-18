@@ -22,7 +22,7 @@ mail.login(EMAIL, PASSWORD)
 # Selecionar a caixa de entrada (inbox)
 mail.select('inbox')
 # Procurar todos os e-mails na caixa de entrada
-status, messages = mail.search(None, 'ALL')
+status, messages = mail.search(None, 'UNSEEN')
 
 if status == 'OK':
     # Lista de IDs de e-mail
@@ -45,33 +45,37 @@ if status == 'OK':
 
                 dados_relatorio = None
 
-                if(body != None):
+                try:
 
-                    dados_relatorio = Classificador(body)
-                
-                else:
+                    if(body != None):
 
-                    if(email_info['subject'] != None):
-
-                        dados_relatorio = Classificador(email_info['subject'])
-
-                if(dados_relatorio != None):
-
-                    if(dados_relatorio['Categoria'] == "spam"):
-
-                        spam = spam + 1
-
+                        dados_relatorio = Classificador(body)
+                    
                     else:
 
-                        relatorio.append({
-                            "remetente":email_info['sender'],
-                            "data":email_info['date_sent'],
-                            "Tema_central":dados_relatorio['Tema_central'],
-                            "Resumo":dados_relatorio['Produto']
-                        })
+                        if(email_info['subject'] != None):
 
-                        mail.store(msg_id, '+FLAGS', '\\Seen')
+                            dados_relatorio = Classificador(email_info['subject'])
 
+                    if(dados_relatorio != None):
+
+                        if(dados_relatorio['Categoria'] == "spam"):
+
+                            spam = spam + 1
+
+                        else:
+
+                            relatorio.append({
+                                "remetente":email_info['sender'],
+                                "data":email_info['date_sent'],
+                                "Tema_central":dados_relatorio['Tema_central'],
+                                "Resumo":dados_relatorio['Produto']
+                            })
+
+                            mail.store(msg_id, '+FLAGS', '\\Seen')
+                except: 
+
+                    print('erro')
                 # Imprimindo informações
                 # print("Remetente:", email_info['sender'])
                 # print("Assunto:", email_info['subject'])
@@ -103,7 +107,7 @@ for i in relatorio:
         \n
     """
 
-relatorio_msg = relatorio_msg + "\n\n\n Numero de spams = " + spam
+relatorio_msg = relatorio_msg + "\n\n\n Numero de spams = " + str(spam)
 
 relatorio_msg = relatorio_msg + "\n\n\n FIM DO RELATORIO"
 

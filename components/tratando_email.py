@@ -9,7 +9,7 @@ def TratandoMensagemEmail(data,email):
 
     except:
         email_message = None
-        print('erro no email')
+        # print('erro no email')
     
     return email_message
 
@@ -23,7 +23,7 @@ def PuxandoInfo(email_message):
 
         sender = None
 
-        print("Erro com o sender")
+        # print("Erro com o sender")
 
     try:
 
@@ -33,7 +33,7 @@ def PuxandoInfo(email_message):
 
         date_sent = None
 
-        print("Erro com o date_sent")
+        # print("Erro com o date_sent")
 
     try:
 
@@ -43,7 +43,7 @@ def PuxandoInfo(email_message):
 
         headers = None
 
-        print("Erro com o headers")
+        # print("Erro com o headers")
 
     try:
 
@@ -53,7 +53,7 @@ def PuxandoInfo(email_message):
 
         email_id = None
 
-        print("Erro com o email_id")
+        # print("Erro com o email_id")
 
     try:
 
@@ -68,7 +68,7 @@ def PuxandoInfo(email_message):
 
         subject = None
 
-        print("Erro com o subject")
+        # print("Erro com o subject")
 
     return({
         'sender':sender,
@@ -95,10 +95,10 @@ def TratandoBody(email_message):
 
         body = None
 
-        print('erro no body')
+        # print('erro no body')
 
-        print(e)
+        # print(e)
 
-        print('erro no body')
+        # print('erro no body')
 
     return body
